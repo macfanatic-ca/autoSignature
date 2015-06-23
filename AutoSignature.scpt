@@ -8,8 +8,9 @@
 --V1.1.3 - May 06, 2015
 --Fixed a bug which would ignore any JobTitle not containing a space, such as CEO
 --V1.1.5 - May 07, 2015
---Fixed a syntax error causing an invalid mailto link being generated.
+--Fixed a syntax error causing an invalid mailto link being generated
 
+---------------- Variables --------------------
 --Set loction of applet.icns
 set appicon to path to resource "applet.icns"
 
@@ -22,6 +23,7 @@ set companyname to "comany name here"
 --Set Company Website
 set companysite to "http://www.company.com"
 
+---------------- Do Not Edit ----------------------
 --Grabs current username
 set user to do shell script "whoami"
 
