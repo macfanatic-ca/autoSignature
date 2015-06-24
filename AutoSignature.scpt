@@ -23,25 +23,46 @@ set companyname to "comany name here"
 --Set Company Website
 set companysite to "http://www.company.com"
 
+--Set Domain/Searchpath (Typically looks like "COMAPANY/All Domains"
+set companydomain to "DOMAIN/searchpath"
+
+--Set Name Attribute
+set username to "RealName"
+
+--Set Email Attribute
+set useremail to "EMailAddress"
+
+--Set Phone Attribute
+set userphone to "PhoneNumber"
+
+--Set Extension Attribute
+set userext to "ipPhone"
+
+--Set Job Title Attribute
+set userjob to "JobTitle"
+
+--Set Address Attribute
+set useraddress to "Street"
+
 ---------------- Do Not Edit ----------------------
 --Grabs current username
 set user to do shell script "whoami"
 
 --Reads specifed AD attributes and stores relevant info
-set fullname to do shell script "dscl '/Active Directory/DOMAIN/search.path' -read /Users/" & user & " RealName | awk -F 'RealName:' '{ print $1 }'"
+set fullname to do shell script "dscl '/Active Directory/" & companydomain & "' -read /Users/" & user & " " & username & " | awk -F '" & username & ":' '{ print $1 }'"
 
-set email to do shell script "dscl '/Active Directory/DOMAIN/search.path' -read /Users/" & user & " EMailAddress | awk '{ print $2 }'"
+set email to do shell script "dscl '/Active Directory/" & companydomain & "' -read /Users/" & user & " " & useremail & " | awk '{ print $2 }'"
 
-set phonenumber to do shell script "dscl '/Active Directory/DOMAIN/search.path' -read /Users/" & user & " PhoneNumber | awk -F 'PhoneNumber:' '{ print $1 }'"
+set phonenumber to do shell script "dscl '/Active Directory/" & companydomain & "' -read /Users/" & user & " " & userphone & " | awk -F '" & userphone & ":' '{ print $1 }'"
 
-set ext to do shell script "dscl '/Active Directory/DOMAIN/search.path' -read /Users/" & user & " ipPhone | awk -F 'dsAttrTypeNative:ipPhone:' '{ print $2 }'"
+set ext to do shell script "dscl '/Active Directory/" & companydomain & "' -read /Users/" & user & " " & userext & " | awk -F '" & userext & ":' '{ print $2 }'"
 
-set jobtitle to do shell script "dscl '/Active Directory/DOMAIN/search.path' -read /Users/" & user & " JobTitle | awk -F 'JobTitle:' '{ print $1 }'"
+set jobtitle to do shell script "dscl '/Active Directory/" & companydomain & "' -read /Users/" & user & " " & userjob & " | awk -F '" & userjob & ":' '{ print $1 }'"
 if jobtitle = "" then
-	set jobtitle to do shell script "dscl '/Active Directory/DOMAIN/search.path' -read Users/" & user & " JobTitle | awk '{ FS = \":[ 	]*|[ 	]+\" }''{ print $2 }'"
+	set jobtitle to do shell script "dscl '/Active Directory/" & companydomain & "' -read Users/" & user & " " & userjob & " | awk '{ FS = \":[ 	]*|[ 	]+\" }''{ print $2 }'"
 end if
 
-set street to do shell script "dscl '/Active Directory/DOMAIN/search.path' -read /Users/" & user & " Street | awk -F 'Street:' '{ print $1 }'"
+set street to do shell script "dscl '/Active Directory/" & companydomain & "' -read /Users/" & user & " " & useraddress & " | awk -F '" & useraddress & ":' '{ print $1 }'"
 
 --Additional Information
 display dialog "You're about to create a new signature.
