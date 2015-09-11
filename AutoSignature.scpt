@@ -72,7 +72,7 @@ Would you like to fill in your information manually?" with icon appicon buttons 
 	if result = {button returned:"Yes"} then
 		display dialog "Please enter your Full Name (1/6)" default answer "John Doe" with icon appicon
 		set fullname to text returned of result
-		display dialog "Please enter your Hyperwallet Email (2/6)" default answer "jdoe@" & companyname & ".com" with icon appicon
+		display dialog "Please enter your " & companyname & " Email (2/6)" default answer "jdoe@" & companyname & ".com" with icon appicon
 		set email to text returned of result
 		display dialog "Please enter your Job Title (3/6)" default answer "" & companyname & " Employee" with icon appicon
 		set jobtitle to text returned of result
