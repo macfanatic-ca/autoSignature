@@ -72,15 +72,15 @@ Would you like to fill in your information manually?" with icon appicon buttons 
 	if result = {button returned:"Yes"} then
 		display dialog "Please enter your Full Name (1/6)" default answer "John Doe" with icon appicon
 		set fullname to text returned of result
-		display dialog "Please enter your Hyperwallet Email (2/6)" default answer "jdoe@hyperwallet.com" with icon appicon
+		display dialog "Please enter your Hyperwallet Email (2/6)" default answer "jdoe@" & companyname & ".com" with icon appicon
 		set email to text returned of result
-		display dialog "Please enter your Job Title (3/6)" default answer "Hyperwallet Employee" with icon appicon
+		display dialog "Please enter your Job Title (3/6)" default answer "" & companyname & " Employee" with icon appicon
 		set jobtitle to text returned of result
-		display dialog "Please enter your Office Phone Number (4/6)" default answer "1 (855) 449-3737" with icon appicon
+		display dialog "Please enter your Office Phone Number (4/6)" default answer "1 (234) 567-8910" with icon appicon
 		set phonenumber to text returned of result
 		display dialog "Please enter your Office Phone Extension (5/6)" default answer "+123" with icon appicon
 		set ext to text returned of result
-		display dialog "Please enter your Office Address (6/6)" default answer "#300-950 Granville St., Vancouver, B.C. V6Z 1L2" with icon appicon
+		display dialog "Please enter your Office Address (6/6)" default answer "#123-456 Unknown St., Vancouver, B.C. V5Y 3A9" with icon appicon
 		set street to text returned of result
 	end if
 end if
