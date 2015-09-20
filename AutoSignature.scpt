@@ -9,6 +9,11 @@
 --Fixed a bug which would ignore any JobTitle not containing a space, such as CEO
 --V1.1.5 - May 07, 2015
 --Fixed a syntax error causing an invalid mailto link being generated
+<<<<<<< HEAD
+=======
+--V1.1.6 - August 26, 2015
+--Added support for users who cannot contact AD
+>>>>>>> 6beead2f5fc56a63ab271de1b1b236247d1f90e5
 
 ---------------- Variables --------------------
 --Set loction of applet.icns
@@ -45,6 +50,7 @@ set userjob to "JobTitle"
 set useraddress to "Street"
 
 ---------------- Do Not Edit ----------------------
+<<<<<<< HEAD
 --Grabs current username
 set user to do shell script "whoami"
 
@@ -64,6 +70,45 @@ end if
 
 set street to do shell script "dscl '/Active Directory/" & companydomain & "' -read /Users/" & user & " " & useraddress & " | awk -F '" & useraddress & ":' '{ print $1 }'"
 
+=======
+--Check AD conntion
+set adconnactive to do shell script "odutil show nodenames | grep 'Active Directory/" & companydomain & "' | awk '{print $4}'"
+--If AD is online:
+if adconnactive = "Online" then
+
+	--Grabs current username
+	set user to do shell script "whoami"
+
+	--Reads specifed AD attributes and stores relevant info
+	set fullname to do shell script "dscl '/Active Directory/" & companydomain & "' -read /Users/" & user & " " & username & " | awk -F '" & username & ":' '{ print $1 }'"
+	set email to do shell script "dscl '/Active Directory/" & companydomain & "' -read /Users/" & user & " " & useremail & " | awk '{ print $2 }'"
+	set phonenumber to do shell script "dscl '/Active Directory/" & companydomain & "' -read /Users/" & user & " " & userphone & " | awk -F '" & userphone & ":' '{ print $1 }'"
+	set ext to do shell script "dscl '/Active Directory/" & companydomain & "' -read /Users/" & user & " " & userext & " | awk -F '" & userext & ":' '{ print $2 }'"
+	set jobtitle to do shell script "dscl '/Active Directory/" & companydomain & "' -read /Users/" & user & " " & userjob & " | awk -F '" & userjob & ":' '{ print $1 }'"
+	if jobtitle = "" then
+		set jobtitle to do shell script "dscl '/Active Directory/" & companydomain & "' -read Users/" & user & " " & userjob & " | awk '{ FS = \":[ 	]*|[ 	]+\" }''{ print $2 }'"
+	end if
+	set street to do shell script "dscl '/Active Directory/" & companydomain & "' -read /Users/" & user & " " & useraddress & " | awk -F '" & useraddress & ":' '{ print $1 }'"
+else
+	--If AD is offline:
+	display dialog "Cannot connect to Active Directory
+Would you like to fill in your information manually?" with icon appicon buttons {"Yes", "Cancel"} default button 2
+	if result = {button returned:"Yes"} then
+		display dialog "Please enter your Full Name (1/6)" default answer "John Doe" with icon appicon
+		set fullname to text returned of result
+		display dialog "Please enter your " & companyname & " Email (2/6)" default answer "jdoe@" & companyname & ".com" with icon appicon
+		set email to text returned of result
+		display dialog "Please enter your Job Title (3/6)" default answer "" & companyname & " Employee" with icon appicon
+		set jobtitle to text returned of result
+		display dialog "Please enter your Office Phone Number (4/6)" default answer "1 (234) 567-8910" with icon appicon
+		set phonenumber to text returned of result
+		display dialog "Please enter your Office Phone Extension (5/6)" default answer "+123" with icon appicon
+		set ext to text returned of result
+		display dialog "Please enter your Office Address (6/6)" default answer "#123-456 Unknown St., Vancouver, B.C. V5Y 3A9" with icon appicon
+		set street to text returned of result
+	end if
+end if
+>>>>>>> 6beead2f5fc56a63ab271de1b1b236247d1f90e5
 --Additional Information
 display dialog "You're about to create a new signature.
 Would you like to manually add your Skype and Mobile contact information?" with icon appicon buttons {"Yes", "No", "Cancel"} default button 2
